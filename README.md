@@ -10,7 +10,7 @@ npm install -g yo
 npm install -g https://github.com/robertobarbedo/generator-scoresync.git
 ```
 
-Then generate your new project *from the folder where your solution (.sln) file is located*:
+Then generate your new project **from the folder where your solution (.sln) file is located**:
 
 ```bash
 yo scoresync
