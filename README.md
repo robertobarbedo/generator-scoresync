@@ -1,5 +1,5 @@
 # generator-scoresync [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Create gulp files to enable auto sync on score scaffolded projects.
+> Creates a simple gulp file to enable auto sync for assets on score scaffolded projects.
 
 ## Installation
 
@@ -7,7 +7,7 @@ First, install [Yeoman](http://yeoman.io) and generator-scoresync using [npm](ht
 
 ```bash
 npm install -g yo
-npm install -g generator-scoresync
+npm install -g https://github.com/robertobarbedo/generator-scoresync.git
 ```
 
 Then generate your new project:
@@ -15,6 +15,15 @@ Then generate your new project:
 ```bash
 yo scoresync
 ```
+
+## Visual Studio
+
+On Visual Studio you can start-up the "watch" task from the "Task Runner Explorer"
+
+Go to Menu View > Other Windows > Task Runner Explorer
+
+It the tasks don`t show up, verify in Menu: Tools > Options > Project and Solutions > External Web Tools
+Make sure the order of the locations is $(PATH) then .\node_modules\.bin, and then others.
 
 ## Getting To Know Yeoman
 
