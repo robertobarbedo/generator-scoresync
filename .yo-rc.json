@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Roberto Barbedo",
+      "authorEmail": "roberto@brainjocks.com",
+      "authorUrl": ""
+    }
+  }
+}
