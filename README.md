@@ -3,14 +3,14 @@
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-scoresync using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, to install [Yeoman](http://yeoman.io) and generator-scoresync using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo
 npm install -g https://github.com/robertobarbedo/generator-scoresync.git
 ```
 
-Then generate your new project:
+Then generate your new project *from the folder where your solution (.sln) file is located*:
 
 ```bash
 yo scoresync
