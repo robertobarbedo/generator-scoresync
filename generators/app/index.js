@@ -41,7 +41,7 @@ module.exports = class extends Generator {
 	{
       type: 'input',
       name: 'projects',
-      message: '\rI shall need to know where are your projects. Have I got it right? Otherwise, where are they - semicolon separated please:\r',
+      message: '\rI shall need to know where are your web projects. I have got it right please press enter, otherwise, where are they? Semicolon separated please:\r',
       default: guessWebProjects()
     }
 	];
