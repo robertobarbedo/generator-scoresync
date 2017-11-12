@@ -1,58 +1,105 @@
-var gulp = require('gulp');
-var sass = require('gulp-ruby-sass');
-var extrep = require('gulp-ext-replace');
-var rename = require("gulp-rename");
+var gulp 		= require('gulp');
+var sass 		= require('gulp-ruby-sass');
+var extrep 		= require('gulp-ext-replace');
+var rename 		= require("gulp-rename");
+var bs 			= require('browser-sync').create();
+var cache 		= require('gulp-cached');
 
-//watch - main task
-gulp.task('watch', function(){
+_website_dest = 'sandbox/Website/Areas/';
+
 <% 
-var pns = folderNames.split(';');
-for (pn in pns) { 
+for (i in ps) { 
 %>
-	gulp.watch(['<%= pns[pn] %>/Areas/*/**/*.cshtml'], ['x-copy-<%= pns[pn] %>-cshtml']);
-	gulp.watch(['<%= pns[pn] %>/Areas/*/**/*.js'], ['x-copy-<%= pns[pn] %>-js']);
-	gulp.watch(['<%= pns[pn] %>/Areas/**/*.scss'], ['x-compile-<%= pns[pn] %>-scss']);
-	gulp.watch(['<%= pns[pn] %>/Areas/*/css/**/*.css'], ['x-copy-<%= pns[pn] %>-css']);
+_csh_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.cshtml';
+_jvs_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.js';
+_sas_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.scss';
+_css_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/*/css/**/*.css';
+<% 
+} 
+%>	
+
+
+gulp.task('watch-copy', function(){
+<% 
+for (i in ps) { 
+%>
+	gulp.watch([_csh_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-cshtml']);
+	gulp.watch([_jvs_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-js']);
+	gulp.watch([_sas_Src_<%= ps[i].name %>], ['x-compile-<%= ps[i].name %>-scss']);
+	gulp.watch([_css_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-css']);
 <% 
 } 
 %>	
 });
 
-
-//copy and compile assets - auxiliar tasks
+function watchForSync(){
 <% 
-var pns = folderNames.split(';');
-for (pn in pns) { 
+for (i in ps) { 
 %>
-	gulp.task('x-copy-<%=pns[pn]%>-cshtml', function() {
-	  gulp.src('<%=pns[pn]%>/Areas/*/**/*.cshtml')
-		  .pipe(gulp.dest('sandbox/Website/Areas/'));
+	gulp.watch([_csh_Src_<%= ps[i].name %>], ['x-browserSync-<%= ps[i].name %>-cshtml']);
+	gulp.watch([_jvs_Src_<%= ps[i].name %>], ['x-browserSync-<%= ps[i].name %>-js']);
+	gulp.watch([_sas_Src_<%= ps[i].name %>], ['x-compile-<%= ps[i].name %>-scss']);
+	gulp.watch([_css_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-css']);
+<% 
+} 
+%>
+}
+<% 
+for (i in hosts) { 
+%>
+gulp.task('browser-sync<%= (hosts.length == 1 ? "" : "-" + hosts[i].name) %>', function() {
+    bs.init({ proxy: { target: "<%= hosts[i].url%>",  }, online: true });	
+	watchForSync();
+});
+<% 
+} 
+%>
+
+//x = auxiliar tasks
+<% 
+for (i in ps) { 
+%>
+	gulp.task('x-copy-<%= ps[i].name %>-cshtml', function() {
+	  gulp.src(_csh_Src_<%= ps[i].name %>)
+		  .pipe(cache('<%= ps[i].name %>-cshtml'))
+		  .pipe(gulp.dest(_website_dest));
 	});
 	
-	gulp.task('x-copy-<%=pns[pn]%>-js', function() {
-	  gulp.src('<%=pns[pn]%>/Areas/*/**/*.js')
-		  .pipe(gulp.dest('sandbox/Website/Areas/'));
+	gulp.task('x-browserSync-<%= ps[i].name %>-cshtml', ['x-copy-<%= ps[i].name %>-cshtml'], function(done) {
+		bs.reload();
+		done();
 	});
 	
-	gulp.task('x-compile-<%=pns[pn]%>-scss', function() {
-		sass('<%=pns[pn]%>/Areas/**/*.scss')
+	
+	gulp.task('x-copy-<%= ps[i].name %>-js', function() {
+	  gulp.src(_jvs_Src_<%= ps[i].name %>)
+		  .pipe(cache('<%= ps[i].name %>-js'))
+		  .pipe(gulp.dest(_website_dest));
+	});
+	
+	gulp.task('x-browserSync-<%= ps[i].name %>-js', ['x-copy-<%= ps[i].name %>-js'], function (done) {
+		bs.reload();
+		done();
+	});
+	
+	
+	gulp.task('x-compile-<%= ps[i].name %>-scss', function() {
+		sass(_sas_Src_<%= ps[i].name %>, { noCache: false, sourceMaps: false })
 			.on('error', sass.logError)
 			.pipe(rename(function (path) {
 				path.dirname = path.dirname.replace('\\scss','\\css');
 				path.extname = ".css";
 				console.log('Processed file:' + path.basename + path.extname)
 			  }))
-			.pipe(gulp.dest('<%=pns[pn]%>/Areas/'))
+			.pipe(gulp.dest('<%= ps[i].folder %>/Areas/'))
 	});
 	
-	gulp.task('x-copy-<%=pns[pn]%>-css', function() {
-	  gulp.src('<%=pns[pn]%>/Areas/*/css/**/*.css')
-		  .pipe(gulp.dest('sandbox/Website/Areas/'));
+	gulp.task('x-copy-<%= ps[i].name %>-css', function() {
+	  gulp.src(_css_Src_<%= ps[i].name %>)
+		  .pipe(cache('<%= ps[i].name %>-css'))
+		  .pipe(gulp.dest(_website_dest))
+		  .pipe(bs.stream());
 	});
 <% 
 } 
 %>
-
-
-
-
