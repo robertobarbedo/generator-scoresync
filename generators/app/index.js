@@ -41,7 +41,7 @@ module.exports = class extends Generator {
 	{
       type: 'input',
       name: 'projects',
-      message: '\rI shall need to know where are your web projects. I have got it right please press enter, otherwise, where are they? Semicolon separated please:\r',
+      message: '\rI shall need to know where are your web projects. If I have got it right please press enter, otherwise, where are they? Semicolon separated please:\r',
       default: guessWebProjects()
     }
 	];
@@ -72,8 +72,8 @@ module.exports = class extends Generator {
 			  done(objThis);
 			})
 			.catch(err => {
-			  console.log(err);
 			  ps.dispose();
+			  
 			  done(objThis);
 			});
 	}
@@ -90,14 +90,27 @@ module.exports = class extends Generator {
 		});
 		
 		//read hosts
-		var hostsString = fs.readFileSync('./bs__hosts.yml', 'utf-8').toString();
 		var hostsArray = [];
-		if (hostsString && hostsString != ""){
-			hostsArray = JSON.parse(hostsString);
+		try{
+			var hostsString = fs.readFileSync('./bs__hosts.yml', 'utf-8').toString();
+			var hostsArray = [];
+			if (hostsString && hostsString != ""){
+				hostsArray = JSON.parse(hostsString);
+			}
+			
+			console.log("Hosts found:");
+			console.log(hostsArray);
+		}catch(err){
+			var hostsArray = [{"name":"SiteName","url":"http://YOUR_HOST_HERE"}];
+			console.log("Hosts not found:");
+			console.log("\x1b[37m%s\x1b[0m", "......");
+		    console.log("\x1b[43m%s\x1b[0m", "Hey, you, here!!!");
+		    console.log("\x1b[37m%s\x1b[0m", "I could not detect your HOST name. Possible reasons:");
+			console.log("\x1b[33m%s\x1b[0m", " - You are not running as Administrator.");
+			console.log("\x1b[32m%s\x1b[0m", " - You don`t have a site in the standard SCORE sandbox location.");
+			console.log("\x1b[36m%s\x1b[0m", " - Your IIS doesn`t have configure the binding.");
+		    console.log("\x1b[37m%s\x1b[0m", "......");
 		}
-		
-		console.log("Hosts found:");
-		console.log(hostsArray);
 		
 		//run the templates
 		objThis.fs.copyTpl(

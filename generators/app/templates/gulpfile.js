@@ -18,6 +18,16 @@ _css_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/*/css/**/*.css';
 } 
 %>	
 
+<% 
+for (i in hosts) { 
+%>
+gulp.task('browser-sync<%= (hosts.length == 1 ? "" : "-" + hosts[i].name) %>', function() {
+    bs.init({ proxy: { target: "<%= hosts[i].url%>",  }, online: true });	
+	watchForSync();
+});
+<% 
+} 
+%>
 
 gulp.task('watch-copy', function(){
 <% 
@@ -44,16 +54,6 @@ for (i in ps) {
 } 
 %>
 }
-<% 
-for (i in hosts) { 
-%>
-gulp.task('browser-sync<%= (hosts.length == 1 ? "" : "-" + hosts[i].name) %>', function() {
-    bs.init({ proxy: { target: "<%= hosts[i].url%>",  }, online: true });	
-	watchForSync();
-});
-<% 
-} 
-%>
 
 //x = auxiliar tasks
 <% 
