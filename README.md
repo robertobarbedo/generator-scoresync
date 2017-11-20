@@ -36,12 +36,6 @@ Go to Menu View > Other Windows > Task Runner Explorer
 It the tasks don`t show up, verify in Menu: Tools > Options > Project and Solutions > External Web Tools
 Make sure the order of the locations is $(PATH) then .\node_modules\.bin, and then others.
 
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
 ## License
 
