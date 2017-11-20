@@ -27,6 +27,8 @@ yo scoresync
 
 ## Visual Studio
 
+![alt text](https://github.com/robertobarbedo/generator-scoresync/blob/master/scoresync.gif)
+
 On Visual Studio you can start-up the "watch" task from the "Task Runner Explorer"
 
 Go to Menu View > Other Windows > Task Runner Explorer
