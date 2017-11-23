@@ -6,10 +6,16 @@
 First, to install [Yeoman](http://yeoman.io) and generator-scoresync using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 
-Install Yeoman
+Install Yeoman (If you dont have it installed)
 ```bash
 npm install -g yo
 ```
+
+Install GULP Client (If you dont have it installed)
+```bash
+npm install -g gulp-cli
+```
+
 
 Install this Generator
 ```bash
@@ -19,8 +25,14 @@ npm install -g https://github.com/robertobarbedo/generator-scoresync.git
 Then generate in your  project:
 
 **1. Execute from the folder where your solution (.sln) file is located**:
-**2. Run the command prompt as Administrator
+**2. Run the command prompt as Administrator**
 
+Install GULP local (If you dont have gulp global installed - not gulp-cli)
+```bash
+npm install gulp
+```
+
+Install the generator in your project (creates two files gulpfile.js and package.json)
 ```bash
 yo scoresync
 ```
