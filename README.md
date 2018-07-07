@@ -23,7 +23,6 @@ npm install -g https://github.com/robertobarbedo/generator-scoresync.git
 ```
 
 
-
 Then generate in your  project:
 
 **1. Execute from the folder where your solution (.sln) file is located**
@@ -53,7 +52,6 @@ Make sure the order of the locations is $(PATH) then .\node_modules\.bin, and th
 
 
 
-
 ## License
 
 Apache-2.0 © [Roberto Barbedo]()
@@ -65,3 +63,5 @@ Apache-2.0 © [Roberto Barbedo]()
 [travis-url]: https://travis-ci.org/robertobarbedo@gmail.com/generator-scoresync
 [daviddm-image]: https://david-dm.org/robertobarbedo@gmail.com/generator-scoresync.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/robertobarbedo@gmail.com/generator-scoresync
+
+end
