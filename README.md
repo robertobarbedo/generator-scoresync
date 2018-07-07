@@ -22,6 +22,8 @@ Install this Generator
 npm install -g https://github.com/robertobarbedo/generator-scoresync.git
 ```
 
+
+
 Then generate in your  project:
 
 **1. Execute from the folder where your solution (.sln) file is located**
@@ -48,6 +50,8 @@ Go to Menu View > Other Windows > Task Runner Explorer
 
 It the tasks don`t show up, verify in Menu: Tools > Options > Project and Solutions > External Web Tools
 Make sure the order of the locations is $(PATH) then .\node_modules\.bin, and then others.
+
+
 
 
 ## License
