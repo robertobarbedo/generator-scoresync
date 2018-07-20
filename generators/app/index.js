@@ -36,12 +36,41 @@ module.exports = class extends Generator {
 			return "";
 		}
 	}
+	
+	var guessProjectName = function(){
+		const dirs = p => fs.readdirSync('./sandbox/').filter(
+			f => fs.statSync(path.join('./sandbox/', f)).isDirectory()
+		);
+
+		if (dirs)
+		{
+			var f = '';
+			dirs().forEach(function(dir){
+				
+				if (fs.existsSync(path.join('./', dir + '/Areas')) && fs.existsSync(path.join('./', dir + '/web.config'))){
+					f += dir + ';';
+				}
+			});
+			//remove ending commas
+			f = f.replace(/;\s*$/, "");
+			
+			return f;
+		}else{
+			return "";
+		}
+	}
   
     const prompts = [
 	{
       type: 'input',
+      name: 'projname',
+      message: '\rWhat is the project name? "' + guessProjectName() + '", perhaps?\r',
+      default: guessProjectName()
+    },
+	{
+      type: 'input',
       name: 'projects',
-      message: '\rI shall need to know where are your web projects. If I have got it right please press enter, otherwise, where are they? Semicolon separated please:\r',
+      message: '\rI need to know where are your web projects. If I have got it right please press enter, otherwise, where are they? Semicolon separated please:\r',
       default: guessWebProjects()
     }
 	];
@@ -118,7 +147,8 @@ module.exports = class extends Generator {
 		  objThis.destinationPath('gulpfile.js'),
 		  {
 			  ps: arrayProjects,
-			  hosts: hostsArray
+			  hosts: hostsArray, 
+			  pname: objThis.props.projname
 		  }
 		);
 		objThis.fs.copyTpl(
@@ -126,7 +156,8 @@ module.exports = class extends Generator {
 		  objThis.destinationPath('package.json'),
 		  {
 			  ps: arrayProjects,
-			  hosts: hostsArray
+			  hosts: hostsArray, 
+			  pname: objThis.props.projname
 		  }
 		);
 		

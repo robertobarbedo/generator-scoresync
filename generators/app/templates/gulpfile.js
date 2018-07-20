@@ -5,7 +5,7 @@ var rename 		= require("gulp-rename");
 var bs 			= require('browser-sync').create();
 var cache 		= require('gulp-cached');
 
-_website_dest = 'sandbox/<%= ps[i].folder %>/Areas/';
+_website_dest = 'sandbox/<%= pname %>/Areas/';
 
 <% 
 for (i in ps) { 
