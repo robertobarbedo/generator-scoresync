@@ -47,7 +47,7 @@ module.exports = class extends Generator {
 			var f = '';
 			dirs().forEach(function(dir){
 				
-				if (fs.existsSync(path.join('./', dir + '/Areas')) && fs.existsSync(path.join('./', dir + '/web.config'))){
+				if (fs.existsSync(path.join('./sandbox/', dir + '/Areas')) && fs.existsSync(path.join('./sandbox/', dir + '/web.config'))){
 					f += dir + ';';
 				}
 			});

@@ -14,6 +14,10 @@ _csh_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.cshtml';
 _jvs_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.js';
 _sas_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.scss';
 _css_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/*/css/**/*.css';
+
+_dll1_Src_<%= ps[i].name %> = '<%= ps[i].name %>.Data/bin/sandbox/*.dll';
+_dll2_Src_<%= ps[i].name %> = '<%= ps[i].name %>.Custom/bin/sandbox/*.dll';
+_dll3_Src_<%= ps[i].name %> = '<%= ps[i].name %>.SiteCluster/bin/sandbox/*.dll';
 <% 
 } 
 %>	
@@ -37,6 +41,10 @@ for (i in ps) {
 	gulp.watch([_jvs_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-js']);
 	gulp.watch([_sas_Src_<%= ps[i].name %>], ['x-compile-<%= ps[i].name %>-scss']);
 	gulp.watch([_css_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-css']);
+	
+	gulp.watch([_dll1_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-webbin1']);
+	gulp.watch([_dll2_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-webbin2']);
+	gulp.watch([_dll3_Src_<%= ps[i].name %>], ['x-copy-<%= ps[i].name %>-webbin3']);
 <% 
 } 
 %>	
@@ -63,6 +71,19 @@ for (i in ps) {
 	  gulp.src(_csh_Src_<%= ps[i].name %>)
 		  .pipe(cache('<%= ps[i].name %>-cshtml'))
 		  .pipe(gulp.dest(_website_dest));
+	});
+	
+	gulp.task('x-copy-<%= ps[i].name %>-webbin1', function() {
+	  gulp.src(_dll1_Src_<%= ps[i].name %>)
+		  .pipe(gulp.dest('sandbox/<%= pname %>/bin/'));
+	});
+	gulp.task('x-copy-<%= ps[i].name %>-webbin2', function() {
+	  gulp.src(_dll2_Src_<%= ps[i].name %>)
+		  .pipe(gulp.dest('sandbox/<%= pname %>/bin/'));
+	});
+	gulp.task('x-copy-<%= ps[i].name %>-webbin3', function() {
+	  gulp.src(_dll3_Src_<%= ps[i].name %>)
+		  .pipe(gulp.dest('sandbox/<%= pname %>/bin/'));
 	});
 	
 	gulp.task('x-browserSync-<%= ps[i].name %>-cshtml', ['x-copy-<%= ps[i].name %>-cshtml'], function(done) {
