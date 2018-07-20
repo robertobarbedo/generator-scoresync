@@ -93,7 +93,7 @@ module.exports = class extends Generator {
 		  noProfile: true
 		});
 		 
-		ps.addCommand('.\\bs__printhosts.ps1')
+		ps.addCommand('.\\bs__printhosts.ps1 ' + objThis.props.projname)
 		ps.invoke()
 			.then(output => {
 			  console.log(output);

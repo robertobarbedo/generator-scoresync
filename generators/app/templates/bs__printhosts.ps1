@@ -1,11 +1,12 @@
-﻿$myDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿param($p1)
+$myDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 cd $myDir
 
 Import-Module WebAdministration
 
 $MyPath = "bs__hosts.yml";
 
-Get-Website | where {$_.PhysicalPath -eq "$mydir\sandbox\<%= pname %>"} | select @{ n = "Bindings"; e = { ($_.bindings | select -expa collection) }} | ForEach-Object { $_.Bindings } | Where-Object {$_.bindingInformation.split(":")[2] -ne "" }| ForEach-Object { ("{""name"":""" + $_.bindingInformation.split(":")[2] + "_" + $_.bindingInformation.split(":")[1] + """,""url"":""" + $_.Protocol + "://" + $_.bindingInformation.split(":")[2] + ":" + $_.bindingInformation.split(":")[1] + """}").Trim() } > $MyPath 
+Get-Website | where {$_.PhysicalPath -eq "$mydir\sandbox\" + $p1} | select @{ n = "Bindings"; e = { ($_.bindings | select -expa collection) }} | ForEach-Object { $_.Bindings } | Where-Object {$_.bindingInformation.split(":")[2] -ne "" }| ForEach-Object { ("{""name"":""" + $_.bindingInformation.split(":")[2] + "_" + $_.bindingInformation.split(":")[1] + """,""url"":""" + $_.Protocol + "://" + $_.bindingInformation.split(":")[2] + ":" + $_.bindingInformation.split(":")[1] + """}").Trim() } > $MyPath 
 
 $MyFile = Get-Content $MyPath 
 $NewFile = "";
