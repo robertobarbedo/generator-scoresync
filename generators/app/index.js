@@ -61,18 +61,18 @@ module.exports = class extends Generator {
 	}
   
     const prompts = [
-	/*{
+	{
       type: 'input',
       name: 'projname',
-      message: '\rWhat is the project name? "' + guessProjectName() + '", perhaps?\r',
+      message: '\rIn your sandbox, your sitecore site is under the "' + guessProjectName() + '" folder? \r If yes, press enter to confirm.',
       default: guessProjectName()
     },
 	{
       type: 'input',
       name: 'projects',
-      message: '\rI need to know where are your web projects. If I have got it right please press enter, otherwise, where are they? Semicolon separated please:\r',
+      message: '\rAnd I guess "' + guessWebProjects() + '" is your Web project?\r If yes, press enter to confirm.',
       default: guessWebProjects()
-    }*/
+    }
 	];
 
     return this.prompt(prompts).then(props => {
@@ -93,7 +93,7 @@ module.exports = class extends Generator {
 		  noProfile: true
 		});
 		 
-		ps.addCommand('.\\bs__printhosts.ps1 ' + guessProjectName())
+		ps.addCommand('.\\bs__printhosts.ps1 ' + objThis.props.projname)
 		ps.invoke()
 			.then(output => {
 			  console.log(output);
@@ -111,7 +111,7 @@ module.exports = class extends Generator {
 	
 		//mount project name/folder objects
 		var arrayProjects = [];  
-		guessWebProjects().split(';').forEach(function(dir){
+		objThis.props.projects.split(';').forEach(function(dir){
 			arrayProjects.push({
 				folder: dir,
 				name: dir.replace(/\.Web/g, '').replace(/\./g, '').replace(/-/g, '')
@@ -148,7 +148,7 @@ module.exports = class extends Generator {
 		  {
 			  ps: arrayProjects,
 			  hosts: hostsArray, 
-			  pname: guessProjectName()
+			  pname: objThis.props.projname
 		  }
 		);
 		objThis.fs.copyTpl(
@@ -157,7 +157,7 @@ module.exports = class extends Generator {
 		  {
 			  ps: arrayProjects,
 			  hosts: hostsArray, 
-			  pname: guessProjectName()
+			  pname: objThis.props.projname
 		  }
 		);
 		
