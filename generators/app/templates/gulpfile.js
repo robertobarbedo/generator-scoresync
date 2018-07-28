@@ -15,9 +15,9 @@ _jvs_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.js';
 _sas_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/**/*.scss';
 _css_Src_<%= ps[i].name %> = '<%= ps[i].folder %>/Areas/*/css/**/*.css';
 
-_dll1_Src_<%= ps[i].name %> = '<%= ps[i].name %>.Data/bin/sandbox/*.dll';
-_dll2_Src_<%= ps[i].name %> = '<%= ps[i].name %>.Custom/bin/sandbox/*.dll';
-_dll3_Src_<%= ps[i].name %> = '<%= ps[i].name %>.SiteCluster/bin/sandbox/*.dll';
+_dll1_Src_<%= ps[i].name %> = '<%= ps[i].name %>.Data/bin/sandbox/<%= ps[i].name %>.*';
+_dll2_Src_<%= ps[i].name %> = '<%= ps[i].name %>.Custom/bin/sandbox/<%= ps[i].name %>.*';
+_dll3_Src_<%= ps[i].name %> = '<%= ps[i].name %>.SiteCluster/bin/sandbox/<%= ps[i].name %>.*';
 <% 
 } 
 %>	
